@@ -1,0 +1,62 @@
+Product Schema:
+{
+  title
+  description
+  originalPrice
+  price
+  discount
+  soldCount
+  category: [watch, bag, bracelet, ring]
+  color
+  material
+  stock
+  
+  reviews: [] (virtual)
+  stars
+  numberOfReviews
+
+  creationDate
+}
+
+Review Schema:
+{
+  stars
+  comment
+  userId
+  productId
+}
+
+WishList Schema:
+{
+  _id
+  productId
+  date
+}
+
+User Schema :
+{
+  fistName
+  lastName
+  email
+  userName
+  phoneNumber
+  password
+  region
+  address(maps)
+}
+
+
+auth
+/api/auth/login ()
+/api/auth/register ()
+
+- basic programming
+- opp
+- data structures
+- algorithms
+- Problem solving
+
+- Database
+- OS
+- Network
+
