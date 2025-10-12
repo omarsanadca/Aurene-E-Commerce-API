@@ -3,9 +3,11 @@ import express from "express";
 import {
   signInValidator,
   signUpValidator,
+  updatePasswordValidator,
 } from "../validators/auth.validators.js";
-import { signIn, signUp } from "../controllers/auth.controller.js";
+import { signIn, signUp, updatePassword } from "../controllers/auth.controller.js";
 import handleValidationResults from "../utils/handleValidationResults.js";
+import isAuthenticated from "../middlewares/is-authenticated.js";
 
 const router = express.Router();
 
@@ -21,6 +23,14 @@ router.post(
   signInValidator,
   handleValidationResults("SignUp Failed"),
   signIn
+);
+
+router.post(
+  "/update-password",
+  isAuthenticated,
+  updatePasswordValidator,
+  handleValidationResults("updating password failed!"),
+  updatePassword
 );
 
 export default router;

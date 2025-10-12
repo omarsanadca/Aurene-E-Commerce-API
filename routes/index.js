@@ -3,13 +3,19 @@ import express from "express";
 import authRoutes from "./auth.routes.js";
 import adminRoutes from "./admin.routes.js";
 import usersRoutes from "./users.routes.js";
+import productsRoutes from "./products.routes.js";
+import reviewsRoutes from "./reviews.routes.js";
+
+import isAuthenticated from "../middlewares/is-authenticated.js";
+import isAdmin from "../middlewares/is-admin.js";
 
 const router = express.Router();
 
-router.use("/admin", adminRoutes);
+router.use("/admin", isAuthenticated, isAdmin, adminRoutes);
 router.use("/auth", authRoutes);
 router.use("/users", usersRoutes);
-// router.use("/products");
+router.use("/products", productsRoutes);
+router.use("/reviews", isAuthenticated, reviewsRoutes);
 // router.use("/wish-list");
 // router.use("/cart");
 // router.use("/orders");

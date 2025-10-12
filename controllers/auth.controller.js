@@ -56,3 +56,20 @@ export const signIn = async (req, res, next) => {
     next(err);
   }
 };
+
+export const updatePassword = async (req, res, next) => {
+  try {
+    const { newPassword } = matchedData(req);
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    const user = await User.findById(req.userId);
+
+    user.password = hashedPassword;
+
+    await user.save();
+
+    res.json({ message: "Updated password successfully!" });
+  } catch (err) {
+    next(err);
+  }
+};

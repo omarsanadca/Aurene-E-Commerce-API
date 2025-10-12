@@ -38,4 +38,12 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+// TODO: add virtual review
+
+
 export const userModel = mongoose.model("User", userSchema);
+
+// user[old password] -> server
+// server[key] -> [ok you can update]
+
+// user[newPassword, confirm, key] -> server

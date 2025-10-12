@@ -10,7 +10,6 @@ import corsConfig from "./config/cors.js";
 
 // middlewares
 import errorMiddleware from "./middlewares/errorMiddleware.js";
-import { userModel } from "./models/user.model.js";
 
 // utils
 import createAdminUser from "./utils/createAdminUser.js";
@@ -36,12 +35,8 @@ app.listen(PORT, (err) => {
     .then(async () => {
       console.log(`Server running on PORT ${PORT}🚀`);
 
-      const adminUser = await userModel.findOne().where("role").equals("admin");
-      // const adminUser = await userModel.findOne({ where: { role: "admin" } });
-      
-      if (!adminUser) {
-        await createAdminUser();
-      }
+      // check if there is an admin user, otherwise create one
+      await createAdminUser();
     })
     .catch((err) => {
       console.log(`Failed to connect to mongodb❌`, err.message);
