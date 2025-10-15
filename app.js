@@ -42,15 +42,17 @@ app.listen(PORT, (err) => {
     console.log("Error while starting the server❗", err.message);
     return;
   }
-  mongoose
-    .connect(process.env.MONGO_DB_URI)
-    .then(async () => {
-      console.log(`Server running on PORT ${PORT}🚀`);
-
-      // check if there is an admin user, otherwise create one
-      await createAdminUser();
-    })
-    .catch((err) => {
-      console.log(`Failed to connect to mongodb❌`, err.message);
-    });
+  console.log(`Server running on PORT ${PORT}🚀`);
 });
+
+mongoose
+  .connect(process.env.MONGO_DB_URI)
+  .then(async () => {
+    console.log("Connected to db ✅🗂️");
+    
+    // check if there is an admin user, otherwise create one
+    await createAdminUser();
+  })
+  .catch((err) => {
+    console.log(`Failed to connect to mongodb❌`, err.message);
+  });
