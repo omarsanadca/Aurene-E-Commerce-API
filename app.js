@@ -19,6 +19,12 @@ const app = express();
 app.use(express.json());
 app.use(corsConfig);
 
+if (process.env.NODE_ENV !== "production") {
+  console.log("I am in development");
+} else {
+  console.log("I am in production🚀");
+}
+
 const PORT = process.env.PORT || 4000;
 
 app.use("/api", apiRoutes);
