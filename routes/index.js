@@ -5,6 +5,7 @@ import adminRoutes from "./admin.routes.js";
 import usersRoutes from "./users.routes.js";
 import productsRoutes from "./products.routes.js";
 import reviewsRoutes from "./reviews.routes.js";
+import wishListRoutes from "./wish-list.routes.js";
 
 import isAuthenticated from "../middlewares/is-authenticated.js";
 import isAdmin from "../middlewares/is-admin.js";
@@ -16,7 +17,7 @@ router.use("/auth", authRoutes);
 router.use("/users", usersRoutes);
 router.use("/products", productsRoutes);
 router.use("/reviews", isAuthenticated, reviewsRoutes);
-// router.use("/wish-list");
+router.use("/wish-list", isAuthenticated, wishListRoutes);
 // router.use("/cart");
 // router.use("/orders");
 

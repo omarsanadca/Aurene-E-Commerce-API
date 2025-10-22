@@ -36,10 +36,13 @@ const userSchema = new mongoose.Schema({
     enum: ["admin", "user"],
     default: "user",
   },
+  wishList: {
+    type: [{ type: mongoose.Schema.ObjectId, ref: "Product" }],
+    default: [],
+  },
 });
 
 // TODO: add virtual review
-
 
 export const userModel = mongoose.model("User", userSchema);
 

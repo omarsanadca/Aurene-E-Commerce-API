@@ -40,6 +40,22 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    imagePublicId: {
+      type: String,
+      required: true,
+    },
+    imageUrl: {
+      type: String,
+      required: true,
+    },
+    stars: {
+      type: Number,
+      default: 0,
+    },
+    reviewsCount: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,
@@ -62,6 +78,33 @@ productSchema.virtual("price").get(function () {
   return (this.originalPrice * (100 - this.discount)) / 100;
 });
 
-// TODO: add virtual reviews
+productSchema.virtual("reviews", {
+  localField: "_id",
+  ref: "Review",
+  foreignField: "productId",
+});
+
+// productSchema.virtual("stars").get(function () {
+//   let sum = 0;
+
+//   if (!this.reviews || this.reviews.length === 0) return 0;
+
+//   for (const review of this.reviews) {
+//     sum += review.stars;
+//   }
+
+//   if (sum === 0) return sum;
+
+//   const allowedStars = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
+//   let stars = sum / this.reviews.length;
+//   for (const s of allowedStars) {
+//     if (s >= stars) {
+//       stars = s;
+//       break;
+//     }
+//   }
+
+//   return stars;
+// });
 
 export const productModel = mongoose.model("Product", productSchema);

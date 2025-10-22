@@ -29,8 +29,6 @@ if (process.env.NODE_ENV !== "production") {
   console.log("I am in production🚀");
 }
 
-console.log(process.env.MONGO_DB_URI.substring(0, 20));
-
 const PORT = process.env.PORT || 4000;
 
 app.use("/api", apiRoutes);

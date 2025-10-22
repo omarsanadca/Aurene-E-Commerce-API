@@ -18,6 +18,14 @@ Product Schema:
   creationDate
 }
 
+// ?sort= [newest, oldest, cheapest, most-expensive]
+// &category= ["watch", "bag", "bracelet", "ring"]
+// &price-min=
+// &price-max=
+// &color=
+// &material=
+// &search
+
 Review Schema:
 {
   stars
