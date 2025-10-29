@@ -40,6 +40,20 @@ const userSchema = new mongoose.Schema({
     type: [{ type: mongoose.Schema.ObjectId, ref: "Product" }],
     default: [],
   },
+  cart: {
+    items: [
+      {
+        productId: {
+          type: mongoose.Schema.ObjectId,
+          ref: "Product",
+          required: true,
+        },
+        // productPrice
+        quantity: { type: Number, default: 1 },
+      },
+    ],
+    totalPrice: { type: Number, default: 0 },
+  },
 });
 
 // TODO: add virtual review

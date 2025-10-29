@@ -68,3 +68,11 @@ auth
 - OS
 - Network
 
+cart: {
+  items: [
+    {productId, quantity}
+  ],
+  totalPrice
+}
+
+user.cart

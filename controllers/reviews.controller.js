@@ -6,6 +6,28 @@ import NotFoundError from "../Errors/NotFoundError.js";
 import { reviewModel as Review } from "../models/review.model.js";
 import ValidationError from "../Errors/ValidationError.js";
 
+export const getAllReviews = async (req, res, next) => {
+  try {
+    const reviews = await Review.find();
+    res.json({ message: "Get all reviews!", reviews });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getMyReview = async (req, res, next) => {
+  try {
+    const review = await Review.find({
+      productId: req.params.productId,
+      userId: req.userId,
+    });
+
+    res.json({ message: "Get your review on this product!", review });
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const addReview = async (req, res, next) => {
   try {
     const { stars, comment, productId } = matchedData(req);
@@ -50,7 +72,9 @@ export const addReview = async (req, res, next) => {
       (3.5 * 2 + 4) / 3
     */
 
-    product.stars = (product.stars * product.reviewsCount + stars) / (product.reviewsCount + 1);
+    product.stars =
+      (product.stars * product.reviewsCount + stars) /
+      (product.reviewsCount + 1);
 
     product.reviewsCount = product.reviewsCount + 1;
 
@@ -76,6 +100,21 @@ export const editReview = async (req, res, next) => {
       throw new Error("You can only edit your own reviews, not others");
     }
 
+    const product = await Product.findById(review.productId);
+
+    product.stars =
+      (product.stars * product.reviewsCount - review.stars) /
+      (product.reviewsCount - 1);
+    product.reviewsCount = product.reviewsCount - 1;
+
+    product.stars =
+      (product.stars * product.reviewsCount + stars) /
+      (product.reviewsCount + 1);
+
+    product.reviewsCount = product.reviewsCount + 1;
+
+    await product.save();
+
     await review.updateOne({ stars, comment });
 
     res.json({ message: "Review updated successfully!" });
@@ -93,9 +132,26 @@ export const deleteReview = async (req, res, next) => {
     }
 
     if (req.userId.toString() !== review.userId.toString()) {
-      throw new Error("You can only edit your own reviews, not others");
+      throw new Error("You can only delete your own reviews, not others");
     }
 
+    /* 
+      {4.5, 3.5, 4} => 12 / 3 = 4
+
+      product.stars = 4;
+      product.reviewsCount = 3
+
+      (3 * 4 - 3.5) / 2 = 7.5 / 2 = 3.75
+    */
+
+    const product = await Product.findById(review.productId);
+
+    product.stars =
+      (product.stars * product.reviewsCount - review.stars) /
+      (product.reviewsCount - 1);
+    product.reviewsCount = product.reviewsCount - 1;
+
+    await product.save();
     await review.deleteOne();
 
     res.json({ message: "deleted review!" });

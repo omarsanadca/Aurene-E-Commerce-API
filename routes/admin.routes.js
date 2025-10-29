@@ -16,10 +16,14 @@ import {
   updateProductValidator,
   validateProductId,
 } from "../validators/products.validators.js";
+import {
+  getAllOrders,
+  getOrderById,
+} from "../controllers/orders.controller.js";
 
 const router = express.Router();
 
-/* Make admin */
+/* ---------------------------------------- Make admin ---------------------------------------- */
 
 router.post(
   "/make-admin",
@@ -28,7 +32,7 @@ router.post(
   makeAdmin
 );
 
-/* Manage Products */
+/* ---------------------------------------- Manage Products ---------------------------------------- */
 
 router.post(
   "/products/",
@@ -52,5 +56,11 @@ router.delete(
   handleValidationResults("Deleting product failed!"),
   deleteProduct
 );
+
+/* ---------------------------------------- Manage Cart ---------------------------------------- */
+
+router.get("/orders", getAllOrders);
+
+router.get("/:orderId", getOrderById);
 
 export default router;

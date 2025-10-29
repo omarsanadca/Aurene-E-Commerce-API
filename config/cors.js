@@ -1,7 +1,7 @@
 import cors from "cors";
 
 const corsConfig = cors({
-  origin: "localhost:3000",
+  origin: "*",
   allowedMethod: ["GET", "POST", "DELETE", "PATCH"],
   allowedHeaders: ["authorization", "content-type"],
   credentials: true,

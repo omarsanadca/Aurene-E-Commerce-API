@@ -16,7 +16,7 @@ import createAdminUser from "./utils/createAdminUser.js";
 
 const app = express();
 
-app.get("/", (req, res) => {
+app.get(["/", "/api"], (req, res) => {
   res.json({ message: "Server is OK!" });
 });
 

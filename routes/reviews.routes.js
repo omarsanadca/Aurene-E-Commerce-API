@@ -4,6 +4,7 @@ import {
   addReview,
   deleteReview,
   editReview,
+  // getAllReviews,
 } from "../controllers/reviews.controller.js";
 import {
   addReviewValidator,
@@ -13,7 +14,9 @@ import handleValidationResults from "../utils/handleValidationResults.js";
 
 const router = express.Router();
 
-router.get("/:reviewId", () => {});
+// router.get("", getAllReviews);
+
+// router.get("/:productId", () => {});
 
 router.post(
   "",
