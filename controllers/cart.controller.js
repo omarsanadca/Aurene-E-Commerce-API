@@ -33,7 +33,7 @@ export const addToCart = async (req, res, next) => {
     if (productItem) {
       productItem.quantity++;
     } else {
-      cart.items.push({ productId, quantity: 1 });
+      cart.items.push({ productId, quantity: 1, productPrice: product.price });
     }
 
     cart.totalPrice += product.price;

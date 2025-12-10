@@ -49,6 +49,9 @@ export const getAllProducts = async (req, res, next) => {
       productsQuery = productsQuery.sort({ createdAt: -1 });
     }
 
+    const totalProducts = await productsQuery.clone().countDocuments();
+    const totalPages = Math.ceil(totalProducts / limit);
+
     productsQuery = productsQuery.skip((page - 1) * limit).limit(limit);
 
     // productsQuery = productsQuery.populate("reviews");
@@ -59,7 +62,16 @@ export const getAllProducts = async (req, res, next) => {
 
     const products = await productsQuery;
 
-    res.json({ message: "get products!", products });
+    res.json({
+      message: "get products!",
+      totalProducts,
+      totalPages,
+      numberOfProducts: products.length,
+      page,
+      isFirstPage: +page === 1,
+      isLastPage: +page === totalPages,
+      products,
+    });
   } catch (err) {
     next(err);
   }

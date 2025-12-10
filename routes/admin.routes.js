@@ -19,6 +19,7 @@ import {
 import {
   getAllOrders,
   getOrderById,
+  updateOrderStatus,
 } from "../controllers/orders.controller.js";
 
 const router = express.Router();
@@ -57,10 +58,12 @@ router.delete(
   deleteProduct
 );
 
-/* ---------------------------------------- Manage Cart ---------------------------------------- */
+/* ---------------------------------------- Manage Order ---------------------------------------- */
 
 router.get("/orders", getAllOrders);
 
-router.get("/:orderId", getOrderById);
+router.get("/orders/:orderId", getOrderById);
+
+router.patch("/orders/:orderId", updateOrderStatus);
 
 export default router;

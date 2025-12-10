@@ -5,13 +5,16 @@ import NotFoundError from "../Errors/NotFoundError.js";
 
 export const getUserData = async (req, res, next) => {
   try {
-    const user  = await userModel.findById(req.userId).select("-password");
+    const user = await userModel
+      .findById(req.userId)
+      .populate("reviews")
+      .select("-password");
 
     if (!user) {
       throw new NotFoundError("User Not Found!");
     }
 
-    res.json({ message: "Get user data successfully!", user });
+    res.json({ message: "Get user data successfully!!!!!!!", user });
   } catch (err) {
     next(err);
   }

@@ -8,6 +8,8 @@ const isAdmin = async (req, res, next) => {
     throw new UnAuthorizedError("You don't have access for this resource");
   }
 
+  req.userRole = "admin";
+
   next();
 };
 

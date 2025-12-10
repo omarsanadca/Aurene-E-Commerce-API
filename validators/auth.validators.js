@@ -49,6 +49,12 @@ export const signInValidator = [
   body("password").notEmpty(),
 ];
 
+export const forgetPasswordValidator = [
+  body("email").isEmail().withMessage("Invalid email"),
+];
+
+export const resetPasswordValidator = [body("newPassword").isStrongPassword()];
+
 /*
 
   123
