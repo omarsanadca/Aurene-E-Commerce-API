@@ -64,12 +64,14 @@ export const getAllProducts = async (req, res, next) => {
 
     res.json({
       message: "get products!",
-      totalProducts,
-      totalPages,
-      numberOfProducts: products.length,
-      page,
-      isFirstPage: +page === 1,
-      isLastPage: +page === totalPages,
+      pagination: {
+        totalProducts,
+        totalPages,
+        numberOfProducts: products.length,
+        page,
+        isFirstPage: +page === 1,
+        isLastPage: +page === totalPages,
+      },
       products,
     });
   } catch (err) {
