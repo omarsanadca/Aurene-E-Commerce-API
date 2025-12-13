@@ -57,7 +57,7 @@ export const getAllProducts = async (req, res, next) => {
     // productsQuery = productsQuery.populate("reviews");
 
     productsQuery = productsQuery.select(
-      "title price originalPrice discount stars reviewsCount imageUrl category color material imageUrl"
+      "title price originalPrice discount stars reviewsCount category color material imageUrl"
     );
 
     const products = await productsQuery;
