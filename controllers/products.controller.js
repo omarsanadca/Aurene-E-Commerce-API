@@ -28,9 +28,9 @@ export const getAllProducts = async (req, res, next) => {
 
     if (priceMin || priceMax) {
       // [500-1000] -> p >= 500 && p <= 1000
-      query.price = {};
-      if (priceMin) query.price.$gte = Number(priceMin);
-      if (priceMax) query.price.$lte = Number(priceMax);
+      query.originalPrice = {};
+      if (priceMin) query.originalPrice.$gte = Number(priceMin);
+      if (priceMax) query.originalPrice.$lte = Number(priceMax);
     }
 
     let productsQuery = Product.find(query);
