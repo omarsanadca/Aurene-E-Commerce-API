@@ -14,6 +14,9 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    price: {
+      type: Number,
+    },
     discount: {
       type: Number,
       default: 0,
@@ -64,6 +67,27 @@ const productSchema = new mongoose.Schema(
   }
 );
 
+productSchema.pre("save", function (next) {
+  this.price = (this.originalPrice * (100 - this.discount)) / 100;
+
+  next();
+});
+
+productSchema.pre("updateOne", async function (next) {
+  const update = this.getUpdate();
+
+  const productToUpdate = await this.model.findOne(this.getQuery());
+
+  if (productToUpdate) {
+    const originalPrice = update.originalPrice ?? productToUpdate.originalPrice;
+    const discount = update.discount ?? productToUpdate.discount;
+
+    this.set({ price: (originalPrice * (100 - discount)) / 100 });
+  }
+
+  next();
+});
+
 // const user= {
 //   name: "ali",
 //   getName: () => {
@@ -74,9 +98,9 @@ const productSchema = new mongoose.Schema(
 //   }
 // }
 
-productSchema.virtual("price").get(function () {
-  return (this.originalPrice * (100 - this.discount)) / 100;
-});
+// productSchema.virtual("price").get(function () {
+//   return (this.originalPrice * (100 - this.discount)) / 100;
+// });
 
 productSchema.virtual("reviews", {
   localField: "_id",

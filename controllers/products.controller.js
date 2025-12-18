@@ -28,10 +28,15 @@ export const getAllProducts = async (req, res, next) => {
 
     if (priceMin || priceMax) {
       // [500-1000] -> p >= 500 && p <= 1000
-      query.originalPrice = {};
-      if (priceMin) query.originalPrice.$gte = Number(priceMin);
-      if (priceMax) query.originalPrice.$lte = Number(priceMax);
+      query.price = {};
+      if (priceMin) query.price.$gte = Number(priceMin);
+      if (priceMax) query.price.$lte = Number(priceMax);
     }
+
+    /*
+      select * from products
+      where price >= 300 and price <= 500
+    */
 
     let productsQuery = Product.find(query);
 
